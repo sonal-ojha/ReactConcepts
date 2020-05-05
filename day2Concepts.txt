@@ -1,0 +1,8 @@
+Container vs Prsentational component
+Default vs {} import
+Pure Components
+Fallback. func for SetState
+Object Destructe for State & props
+Hooks with Counter example
+React Router
+React Dev Tools
