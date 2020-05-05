@@ -1,34 +1,32 @@
 import React from 'react';
-import Header from './Header';
+import Home, { About } from './Home';
 
 import './App.css';
-import Counter from './Counter';
 
-// function
+// Dumb / presentational componenent 
 function App() {
   return (
-    // JSX
     <div className="App">
-      <header className="App-header">
-        {/* Header Component */}
-        {/* <Header></Header> */}
-        <Header headertext="Counter Example" />
-        <Counter />
-      </header>
+      <Home />
+      <hr />
+      {/* Import without using default */}
+      {/* <About></About> */}
     </div>
   );
 }
 
-export default App;
+// Pure Components
+// class Details extends React.PureComponent {
 
+//   // special life cycle method
+//   shouldComponentUpdate() { // returns true/false
+//     // compores your state and props - shallow comparison
+//   }
 
-// Class component syntax: for App
-// class App extends React.Component {
 //   render() {
-//     return (
-//       <div>
-//         {/* JSX goes here */}
-//       </div>
+//     return(
 //     )
 //   }
 // }
+
+export default App;

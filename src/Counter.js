@@ -1,14 +1,7 @@
 import React from 'react';
 
+// Stateful/ Container component
 class Counter extends React.Component {
-
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     count: 0,
-  //   };
-  //   this.handleIncrease = this.handleIncrease.bind(this);
-  // }
 
   state = {
     count: 0,
@@ -37,15 +30,15 @@ class Counter extends React.Component {
 
   handleIncrease = () => {
     // Increase the count value by 1
-    this.setState({
-      count: this.state.count + 1,
-    });
-  }
-
-  handleIncrease() {
-    console.log('This in Function Increase = ', this);
-    this.setState({
-      count: this.state.count + 1,
+    // this.setState({
+    //   count: this.state.count + 1,
+    // });
+    // setState using callback functional format
+    this.setState((prevState) => {
+      // 0 
+      // 0 + 1 // return new value
+      const newCountVal = prevState.count + 1;
+      return { count: newCountVal }; //**NOTE: return always like an object
     });
   }
 
@@ -57,29 +50,33 @@ class Counter extends React.Component {
   }
 
   handleName = (event) => {
-    // event.target.value
-    console.log('Value = ', event.target.value);
     this.setState({
       name: event.target.value,
     });
   }
+
   render() {
+    const { count, personDetails, name } = this.state;
     return (
       <div>
+        <h2>Counter Example</h2>
         <button onClick={this.handleIncrease}>
           Increase
         </button>
-        {this.state.count}
+        {/* {this.state.count} */}
+        {/* using destructure concept */}
+        {count}
         <button onClick={this.handleDecrease}>
           Decrease
         </button>
         <hr/>
         {/* Display Array of Elements */}
         <div>
-          {this.state.personDetails.map((person, index) => (
-            <div key={person.id}>
+          <h2>Display items from Array of Objects</h2>
+          {personDetails.map((person, index) => (
+            <div key={person.id} style={{ display: 'flex', justifyContent: 'space-around' }}>
               {person.name}
-              <div>
+              <div style={{ marginLeft: '20px' }}>
                 {person.age}
               </div>
             </div>
@@ -87,12 +84,14 @@ class Counter extends React.Component {
         </div>
         <hr ></hr>
         {/* Controlled vs Uncontrolled Elements */}
+        <h2>Controlled Input Component</h2>
         <input
           type="text"
           placeholder="Your name..."
           onChange={this.handleName}
-          value={this.state.name}
+          value={name}
         />
+        <hr />
       </div>
     )
   }
