@@ -1,85 +1,71 @@
-import React from 'react';
-// import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { createContext } from 'react';
+import AvatarList from './AvatarList';
 import Header from './Header';
-import Counter from './Counter';
-import Form from './Form';
 
-import { HashRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import CounterWithHooks from './CounterWithHooks';
 
-// object destructing
-// const obj = {
-//   name: 'sonal',
-//   age: 23,
-//   addr: 'Hyd',
-// };
-// const { name, age } = obj;
-// output of name will bve 'sonal'
+import ErrorBoundary from './ErrorBoundary';
+import MyContext from './MyContext';
 
-// Array destructre
-// const [ firstItem , secondItem ] = ['one', 'two', 'dfghj'];
-// firstItem will be assigned the first index value from array = 'one'
-
-export const ABoutPath = "/about";
-
-export function About() {
-  return (
-    <div>
-      All About us!!
-      JsFactory Classes
-    </div>
-  )
-}
-
-function Contact() {
-  return (
-    <div>
-      <div>JsFactory.com</div>
-      <div>send an enquiry to get complete information</div>
-    </div>
-  )
-}
-
-function AllConcepts() {
-  return (
-    <div>
-      <hr />
-      <div>
-        React advance concepts today !!
-      </div>
-      <Header headertext="How to use seState using Example" />
-      <hr />
-      <Counter />
-      {/* State Uplift */}
-      <Form />
-    </div>
-  )
-}
+const AVATAR_URL = "https://api.github.com/search/users?q=ab";
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    // craete a Ref for any element
+    this.inputRef = React.createRef();
+  }
+
+  state = {
+    totalCount: '',
+    avatarData: [],
+    isFetching: false,
+  }
+
+  componentDidMount() {
+    // Focus my Input element here
+    this.inputRef.current.focus();
+    this.setState({ isFetching: true });
+    fetch(AVATAR_URL).then(response => response.json())
+      .then(avatars => {
+        console.log('avatars = ', avatars);
+        this.setState({
+          isFetching: false,
+          avatarData: avatars.items,
+          totalCount: avatars.total_count,
+        })
+      })
+      .catch(err => {
+        this.setState({ isFetching: false });
+        console.log('Error in Fetching data...', err);
+      })
+  }
+
   render() {
+    const { isFetching, avatarData, totalCount } = this.state;
     return (
       <div>
-        <hr />
-        {/* Routing */}
-        <h2>Routing Concepts</h2>
-        <Router>
-          <ul>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-            <li>
-              <Link to="/concepts">Concepts</Link>
-            </li>
-          </ul>
-          <Switch>
-            <Route exact path={ABoutPath} component={About} />
-            <Route exact path="/contact" component={Contact} />
-            <Route exact path="/concepts" component={AllConcepts} />
-          </Switch>
-        </Router>
+        {/* <CounterWithHooks /> */}
+        {/* Reference Concept in React */}
+        <input
+          type="text"
+          style={{ width: "200px", height: '30px', margin: '20px' }}
+          placeholder="Search..."
+          ref={this.inputRef} // assign the reference to element
+        />
+        <ErrorBoundary>
+          <Header>
+            <h2>Day 3 Of React Concepts </h2>
+            <h3>Children Elemnsts</h3>
+          </Header>
+        </ErrorBoundary>
+        {isFetching && <div>Loading....</div>}
+        {/* <AvatarList avatarDataList={avatarData} totalCount={totalCount} /> */}
+        <ErrorBoundary>
+          <MyContext.Provider value={totalCount}>
+            <AvatarList avatarDataList={avatarData} />
+          </MyContext.Provider>
+        </ErrorBoundary>
       </div>
     )
   }
