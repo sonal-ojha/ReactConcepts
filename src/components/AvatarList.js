@@ -1,18 +1,16 @@
 import React from 'react';
-// import AvatarCount from './AvatarCount';
 import Avatar from './Avatar';
 import AvatarCount from './AvatarCount';
 
 function AvatarList(props) {
-  const { avatarDataList } = props;
+  const { avatarDataList, totalCount } = props;
   return (
     <div>
-      {/* <AvatarCount totalCount={totalCount} /> */}
-      <AvatarCount />
+      <AvatarCount totalCount={totalCount} />
       {/* Display All Avatars in the Array */}
       {avatarDataList && avatarDataList.length > 0 && avatarDataList.map((avatar, index) => (
-        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Avatar avatarDetails={avatar} key={index} />
+        <div style={{ display: 'flex', justifyContent: 'space-around' }} key={index}>
+          <Avatar avatarDetails={avatar} />
         </div>
       ))}
     </div>

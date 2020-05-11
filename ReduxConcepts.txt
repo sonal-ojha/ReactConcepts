@@ -1,0 +1,30 @@
+Redux
+
+Run the below command to install All dependencies
+  npm i redux react-redux redux-thunk redux-devtools-extension
+
+### Steps to Follow
+
+1.Store - create store. createStore is a function acailable from 'redux'. It accepts 2 arguments.
+  -> Reducers
+  -> dev tools
+
+2.Provider : Import 'Provider' from 'react-redux' & Add Provider as the parent component of 'App' component in index.js file.
+  store is passed as a 'prop' & It makes the Redux store available to the rest of your app.
+
+3.Action: A function where you make Fetch API calls and dispatch action types based on response received.
+
+4.Reducer: They are Pure Functions. Used to update data in the Store.
+  you should never mutate state directly(in store).use spread ... syntax to return New State every Time.
+
+5.Connect: is a HOC. It connects a React component to a Redux store. 
+  It does not modify the Component you passed to it; Instead, it returns a New Component.
+  Accepts 2 arguments
+    -> mapStateToProps
+    -> mapDispatchToProps
+
+mapStateToProps: Is a function and returns a "object" that contains the data(from Store) the component needs
+NOTE: ** Whenever the data in store changes, all of the mapStateToProps functions of all of the connected components will run.
+
+mapDispatchToProps: Is a Function used for dispatching "Actions" to the store.
+  Expected to return an "object". Each field of the object should be a function, calling which is expected to dispatch an action to the store.
