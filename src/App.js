@@ -16,10 +16,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { avatarItems } = this.props;
+    const { avatarItems, totalCount, isFetchingData } = this.props;
     return (
       <div className="App">
-        <Home isFetching={false} avatarData={avatarItems} totalCount="0" />
+        <Home isFetching={isFetchingData} avatarData={avatarItems} totalCount={totalCount} />
       </div>
     );
   }
@@ -27,6 +27,8 @@ class App extends React.Component {
 
 const mapStoreToProps = (store) => ({
   avatarItems: store.avatarData.avatarDetails,
+  totalCount: store.avatarData.avatarCount,
+  isFetchingData: store.avatarData.isFetching,
 });
 
 const mapDispatchToProps = (dispatch) => ({
